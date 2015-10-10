@@ -1,0 +1,33 @@
+
+<div id="content" ng-controller="MongodbCtrl">
+    <div  js-console>
+        <div ng-include="'app/partial/project/_project_nav.html'" ></div>
+
+
+
+        <div   >
+            <div class="tool-bar" style="text-align: left" >
+
+                <a   class="btn btn-default  btn-sm  template_btn" data-target="remove_metrics"  translate>label.removeMetrics</a>
+            </div>
+            <div style="border-top: 1px solid black; border-bottom: 1px solid black;">
+                <textarea class="script-text"   name="script"   >db.stats()</textarea>
+            </div>
+            <br/>
+            <div style="float:left;">
+                <a  class="btn btn-primary btn-sm "  ng-click="runScript()"  translate>label.test</a>
+                <a   class="btn btn-default btn-sm "  ng-click="clearConsole()" translate >label.clear</a>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+
+
+
+            <div style="border-top: 1px solid black; border-bottom: 1px solid black;">
+                <textarea class="script-console" ></textarea>
+            </div>
+
+        </div>
+    </div>
+</div>

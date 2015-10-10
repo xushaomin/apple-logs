@@ -1,0 +1,38 @@
+<div ng-controller="ProjectWarningsCtrl" >
+
+    <div ng-include="'app/partial/project/_project_nav.html'" ></div>
+
+
+    <div class=" tool-bar pull-right ">
+
+        <div class="btn-group ">
+
+            <a href="javascript:void(0)" ng-click="clearAlerts()" class="btn btn-primary"><i class="glyphicon glyphicon-remove"></i>{{'label.clear' | translate}}</a>
+        </div>
+
+    </div>
+     <div>
+
+         <div id="warning_tab_div">
+             <table class="table table-bordered table-hover">
+                 <thead>
+                 <tr class="active">
+                     <th translate>label.name</th>
+                     <th translate>label.level</th>
+                     <th translate>label.content</th>
+                     <th translate>label.time</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+
+                 <tr ng-repeat="alert in alerts"  >
+                     <td>{{alert.title}}</td>
+                     <td>{{alert.level}}</td>
+                     <td>{{alert.content|limitTo:50}}</td>
+                     <td>{{alert.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                 </tr>
+                 </tbody>
+             </table>
+         </div>
+     </div>
+</div>

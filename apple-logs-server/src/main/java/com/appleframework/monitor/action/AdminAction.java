@@ -1,0 +1,67 @@
+/**
+ * Copyright (C) 2012 skymobi LTD
+ *
+ * Licensed under GNU GENERAL PUBLIC LICENSE  Version 3 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.appleframework.monitor.action;
+
+import com.appleframework.monitor.model.View;
+import com.appleframework.monitor.model.WebResult;
+import com.appleframework.monitor.security.UserManager;
+import com.appleframework.monitor.service.ViewService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+
+/**
+ * Author: Hill.Hu
+ */
+@Controller
+public class AdminAction {
+	
+    private static Logger logger = LoggerFactory.getLogger(AdminAction.class);
+    
+    @Resource
+    private UserManager userManager;
+    
+    @Resource
+    private ViewService viewService;
+
+    @RequestMapping(value = "/admin/views/destroy")
+    public @ResponseBody WebResult deleteView(String name, ModelMap map) {
+        viewService.delete(name);
+        return new WebResult();
+    }
+
+    @RequestMapping(value = "/admin/views/save")
+    public @ResponseBody WebResult createView(HttpEntity<View> entity, ModelMap map) {
+        WebResult result = new WebResult();
+        try {
+            View view = entity.getBody();
+            Assert.isTrue(view.getName().length() > 0, "name should not be null");
+            logger.debug("save view ={}", view);
+            viewService.saveView(view);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
+}

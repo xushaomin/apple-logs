@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.appleframework.logs</groupId>
+	<artifactId>apple-logs-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0</version>
+
+	<licenses>
+		<license>
+			<name>gpl_v3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>skymobi</id>
+			<name>steven.zheng</name>
+			<email>steven.zheng@skymobi.com</email>
+		</developer>
+		<developer>
+			<id>skymobi</id>
+			<name>Hill Hu</name>
+			<email>hill.hu@skymobi.com</email>
+		</developer>
+		<developer>
+			<id>cruise</id>
+			<name>Cruise Xu</name>
+			<email>xushaomin@foxmail.com</email>
+		</developer>
+	</developers>
+	<repositories>
+		<repository>
+			<id>oschina</id>
+			<name>oschina</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+		</repository>
+	</repositories>
+	
+	<modules>
+		<module>apple-logs-api-log4j</module>
+		<module>apple-logs-api-agent</module>
+		<module>apple-logs-server</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<name>Local Nexus Releases Repository</name>
+			<url>http://mvnrepo.appleframework.com/nexus/content/repositories/releases</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>Local Nexus Snapshots Repository</name>
+			<url>http://mvnrepo.appleframework.com/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+</project>

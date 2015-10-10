@@ -1,0 +1,76 @@
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+
+        $("#add_form").validate();
+
+
+    });
+</script>
+
+<div id="content" ng-controller="TaskEditControl">
+    <div js-console>
+        <div ng-include="'app/partial/project/_project_nav.html'" ></div>
+
+
+        <form id="add_form" ng-submit="updateTask()" class="form-horizontal  ng-valid" >
+            <div class="tool-bar" style="text-align: left">
+
+                <table>
+                    <tbody>
+                    <tr class="setting-input">
+
+                        <td class="setting-name " translate>label.name </td>
+                        <td class="setting-main"><input name="name" id="task_name"   class="{required:true,name:true,minlength:2}  form-control" ng-model="task.name" style="width: 200px;"/></td>
+                    </tr>
+                    <tr  >
+                        <td class="setting-name" translate>label.cron</td>
+                        <td class="setting-main"><input name="cron" id="cron_text" class="{required:true,cron:true,minlength:6}  form-control"
+                                                        ng-model="task.cron" value=""  style="width: 200px;display: inline-block"/> <a href="javascript:void(0)" onclick="$('#cronTipDiv').toggle()">?</a> </td>
+                    </tr>
+                    <tr  id="cronTipDiv" style="display: none">
+                        <td class="setting-name"  > </td>
+                        <td class="setting-main" ><span translate> tip.cron</span> <br/>more info search for : quartz + crontrigger</td>
+                    </tr>
+                    <tr  >
+                        <td class="setting-name" translate>label.timeout</td>
+                        <td class="setting-main "><input name="timeout" id="time_out"  ng-model="task.timeout" class=" form-control" style="width: 200px;"/></td>
+                    </tr>
+                    <tr>  <td translate>
+                        label.template
+                    </td> <td>  <a  class="btn btn-sm btn-default template_btn" data-target="log_stats" translate>label.logStats</a>
+                        <a  class="btn btn-sm  btn-default template_btn" data-target="money_stats" translate>label.moneyStats</a>
+                        <a  class="btn  btn-sm btn-default template_btn" data-target="key_words" translate>label.keyWordStats</a>
+                        <a  class="btn  btn-sm btn-default template_btn" data-target="jvm_stats" translate>label.jvmStats</a>
+                        <a  class="btn  btn-sm btn-default template_btn" data-target="day_stats" translate>label.dayStats</a></td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+            <div style="border-top: 1px solid black; border-bottom: 1px solid black;">
+                <textarea class="script-text"   name="script"   ></textarea>
+            </div>
+            <br/>
+            <div style="float:left;">
+                <button class="btn  btn-sm btn-primary" type="submit" translate>label.ok</button>
+                <button  class="btn  btn-sm btn-success " type="button" id="run_btn" ng-click="runScript()" translate>label.test</button>
+                <button class="btn  btn-sm btn-default " type="button" id="clear_btn" ng-click="clearConsole()" translate>label.clear</button>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+        </form>
+
+
+        <div style="border-top: 1px solid black; border-bottom: 1px solid black;">
+            <textarea class="script-console" ></textarea>
+        </div>
+        <!--script template-->
+        <div style="display: none">
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<div ng-controller="SettingDogCtrl">
+    <table class="table table-bordered table-hover"  >
+        <thead>
+        <tr class="active">
+            <th ><span translate>label.name</span></th>
+            <th translate>label.level</th>
+            <th translate>label.time</th>
+            <th translate>label.status</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr  ng-repeat="dog in project.metricDogs"   ng-click="editDog(dog)" ng-class="{success:dog==activeDog}">
+
+            <td  >{{dog.name}}</td>
+            <td>{{dog.level}}</td>
+            <td>{{dog.startTime}}-{{dog.endTime}}</td>
+            <td>{{dog.enable}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button  ng-hide="activeDog"  class="btn btn-primary"  ng-click="addDog()" translate>link.add</button>
+
+    <form class="form-horizontal  edit-form" role="form"  ng-show="activeDog" ng-submit="updateDog()">
+
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label" translate>label.name</label>
+            <div class="col-sm-10">
+                <input  name="name"  type="text" ng-model="activeDog.name"   class="form-control"  >
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label" translate>label.desc</label>
+            <div class="col-sm-10">
+                <input  name="name"  type="text" ng-model="activeDog.desc"   class="form-control"  >
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label" translate>label.on</label>
+            <div class="col-sm-10">
+                <input type="checkbox" ng-model="activeDog.enable" > 状态正常
+
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label" >label.condition</label>
+            <div class="col-sm-10" translate>
+               <span translate>label.if</span>   <select   ng-model="activeDog.metricName"   >
+                <option ng-repeat="metric in metricNames">{{metric}}</option>
+            </select>
+
+                <select id="dogs_form_operator" ng-model="activeDog.operator" >
+
+                    <option  value="<">小于</option>
+                    <option value="=">等于</option>
+                    <option value=">">大于</option>
+                </select>
+                 <input id='dogs_form_targetValue' ng-model="activeDog.targetValue" name="targetValue" placeholder="目标值" value="0">
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label" translate> label.alertLevel</label>
+            <div class="col-sm-10">
+
+                <select    ng-model="activeDog.level">
+                    <option value="WARN">普通</option>
+                    <option value="ERROR">严重</option>
+                </select>
+                连续指定次后升级为严重:<select   ng-model="activeDog.times"  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option selected="selected" value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="100000">永远不</option>
+                </select>次 (普通级别只发邮件， 严重级别将通知所有监控平台)
+            </div>
+
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label" translate>label.timeRange</label>
+            <div class="col-sm-10" translate>
+                label.startTime:<input name="startTime" ng-model="activeDog.startTime"   class="{required:true,name:true,minlength:8}" />
+                label.endTime:<input name="endTime"  ng-model="activeDog.endTime" class="{required:true,name:true,minlength:8}"  />
+                 <input  ng-model="activeDog.excludeTimeMode" id='dogs_form_excludeTimeMode' type="checkbox" /> 在此时间段内不会告警
+
+            </div>
+        </div>
+        <div class="form-group"  >
+            <label   class="col-sm-2 control-label" translate>label.emails</label>
+            <div class="col-sm-10">
+
+               <input   ng-model="activeDog.mailList"   class="form-control" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button   type="submit" class="btn btn-primary" translate>label.ok</button>
+                <a     ng-click="removeDog()"  class="btn btn-danger pull-right" translate>label.delete</a>
+                <a  ng-click="editDog()" class="btn btn-default" translate>label.cancel</a>
+            </div>
+        </div>
+
+    </form>
+
+</div>

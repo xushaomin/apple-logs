@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="GBK"?>
+<message>
+	<hostName>172.16.3.47</hostName>
+	<ip>172.16.3.47</ip>
+	<monitoringName>$title</monitoringName>
+	<monitoringTime>2012-7-11 13:01:00</monitoringTime>
+	<monitoringInfo>$content</monitoringInfo>
+	<monitoringDemo></monitoringDemo>
+	<noticeNameOne>$user1.name</noticeNameOne>
+	<noticePhonenumOne>$user1.phone</noticePhonenumOne>
+	<noticeEmailOne>$user1.email</noticeEmailOne>
+	<noticeNameTwo>user2.name</noticeNameTwo>
+	<noticePhonenumTwo>user2.phone</noticePhonenumTwo>
+	<noticeEmailTwo>user2.email</noticeEmailTwo>
+	<businessCode>1</businessCode>
+	<code>1</code>
+</message>

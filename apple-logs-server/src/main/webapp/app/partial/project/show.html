@@ -1,0 +1,75 @@
+<div ng-controller="ProjectShowCtrl">
+<div  >
+
+    <div ng-include="'app/partial/project/_project_nav.html'" ></div>
+
+
+    <div class=" tool-bar">
+        <div class="btn-group">
+            <a href="javascript:void(0)"  class="btn btn-default"  ng-repeat="chartView in project.chartViews"
+               ng-class="{active:chartView.title==chartTitle}"  ng-click="drawChartView(chartView.title)">{{chartView.title}}</a>
+
+        </div>
+        <div class="btn-group pull-right visible-lg-inline">
+            <a translate class="btn btn-sm btn-default" ng-click="addChartView()" data-toggle="modal" data-target="#metricsViewDialog">
+                <i class="glyphicon glyphicon-plus" ></i>link.add</a>
+
+            <a   ng-confirm-click="{{'tip.confirmDelete' | translate}}[{{chartTitle}}]?" confirmed-click="removeChartView()"
+                   class="btn btn-sm btn-default"><i class="glyphicon glyphicon-remove"></i>{{'label.delete' |translate}}</a>
+        </div>
+
+    </div>
+     <div>
+
+         <div class="MonitorToolbar" >
+             <form  method="post" ng-submit="updateTimeRange()">
+            <span translate>label.timeRange</span> <select  ng-model="project.timeRange.last"  name="last" id="last_selector" class="FilterFormText"  ng-init="numbers=[1,2,4,8,12,24,48]">
+             <option  ng-value="n"  ng-repeat="n in numbers">{{n}}</option>
+
+         </select>
+             <select name="unit" ng-model="project.timeRange.unit" id="unit_selector" class="FilterFormText" >
+                 <option value="12">Minutes</option>
+                 <option value="10">Hours</option>
+                 <option value="5">Days</option>
+             </select>
+             <button   type="submit" translate>label.refresh</button>
+             </form>
+
+         </div>
+         <div class="chart-view"></div>
+     </div>
+</div>
+<div class="modal fade" id="metricsViewDialog" tabindex="-1"  aria-hidden="true">
+    <div class="modal-dialog"  >
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" translate>label.addChart</h4>
+            </div>
+            <div class="modal-body">
+
+                    <div class="tab-pane active" id="metricsViewAddTab">
+                        <form  id="metricsViewForm" name="chartViewForm">
+                         <label  >{{'label.name' | translate}}<input name="title" ng-model="chartView.title"  ng-required="true"></label>
+                            <span class="error" ng-show="chartViewForm.title.$error.required">Required!</span>
+
+                            <div  ng-repeat="metric in metricNames">
+                                <label class="control-label"  ><input name="metricName"
+                                       type="checkbox" ng-click="addMetric(metric)" ng-value="metric"
+                                        >{{metric}}</label>
+
+                            </div>
+                        </form>
+                    </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button"  ng-click="saveChartView(chartView)" class="btn btn-primary" data-dismiss="modal" translate>label.ok</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

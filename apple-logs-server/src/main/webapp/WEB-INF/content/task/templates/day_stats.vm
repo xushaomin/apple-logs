@@ -1,0 +1,18 @@
+#set($layout="/WEB-INF/content/layout/none.vm")
+//stats 5 min first,then stats all
+var now=new Date();
+var metric5="#springMessage('label.5minRequestStats')" ;
+var metricDay="#springMessage('label.5minRequestStats')";
+var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+var value=db.${project.logCollection}.find({'message':/receive a  page request/,timestamp:{'$gt':new Date(now - 300000)}}).count()
+var total=0;
+db.${project.metricCollection}.save({name:metric5,value:value,timeStamp:new Date().getTime()});
+cur=db.${project.metricCollection}.find({name:metricDay,timeStamp:{'$gt':today.getTime()}});
+cur.forEach( function(metric) {
+    total+=metric.value;
+});
+
+db.${project.metricCollection}.save({name:"#springMessage('label.requestDayStats')",value:total,timeStamp:new Date().getTime()});
+
+
+return metric5 +'：'+value +';   '+metricDay+'：'+total;

@@ -1,0 +1,72 @@
+<div  ng-controller="SettingViewCtrl">
+<div>
+    <div class="top-nav visible-lg">
+        <div class="btn-toolbar" ng-show="auth.isAdmin">
+            <div class=" pull-right" >
+                <a href="#/new" class="btn " translate> <i class="glyphicon glyphicon-plus" ></i>link.addProject</a>
+                <a  class="btn " data-target="#viewDialog" data-toggle="modal" ng-click="editView()" translate>
+                    <i class="glyphicon glyphicon-eye-open"></i>link.addProjectView</a>
+                <a translate  class="btn "  data-target="#viewDialog" data-toggle="modal" ng-click="editView(activeView)"> <i class="glyphicon glyphicon-eye-close"></i>link.manageProjectView</a>
+                <a href="#/user/list" class="btn" translate> <i class="glyphicon glyphicon-user"></i>link.mangerUser</a>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class=" tool-bar">
+        <div class="btn-group ">
+
+            <a   ng-repeat="view in views "ng-class="{active:activeView==view}" class="btn btn-default "   ng-click="switchView(view)">{{view.name}}</a>
+        </div>
+
+
+    </div>
+
+    <div class="fd-projects">
+        <ul class="fd-projects-list">
+            <li  class="animate-repeat"  ng-repeat="project in visibleProjects"    ng-class="[project.status]" >
+
+                <a href="#/show/{{project.name}}" class="title ">{{project.alias}}<span class="author">{{project.admins[0]}}</span></a>
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+
+<div class="modal fade" id="viewDialog" tabindex="-1"  aria-hidden="true">
+    <div class="modal-dialog" ng-init="">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" translate>link.manageProjectView</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="tab-pane active" id="metricsViewAddTab">
+                    <form  id="metricsViewForm" name="chartViewForm">
+                        <label translate>label.name<input name="title" ng-model="selectedView.name"  ng-required="true"></label>
+
+                        <div  ng-repeat="project in projects">
+
+                            <label class="control-label"  >
+                                <input    type="checkbox" ng-value="project.name"
+                                          ng-checked="selectedView.projectNames.indexOf(project.name)>-1"   >
+                                                              {{project.alias }}</label>
+
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button"  ng-click="addView(selectedView)" class="btn btn-primary" data-dismiss="modal" translate>label.ok</button>
+                <button ng-show="selectedView.createTime" type="button"  ng-click="removeView(selectedView)" class="btn btn-danger" data-dismiss="modal" translate>label.delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

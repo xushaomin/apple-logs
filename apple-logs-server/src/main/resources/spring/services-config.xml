@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+          
+  	<import resource="task-templates.xml"/>
+  	
+    <context:annotation-config/>
+    <context:component-scan base-package="com.appleframework.monitor.service,com.appleframework.monitor.security"/>
+    
+    <bean id="projectService" class="com.appleframework.monitor.service.ProjectService" init-method="init">
+        <property name="mongoTemplate" ref="mongoTemplate"/>
+        <property name="collectionName" value="${mongo.collection}"/>
+    </bean>
+    
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory">
+            <bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+                <constructor-arg name="uri" ref="mongoURI"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="mongoURI" class="com.mongodb.MongoURI">
+        <constructor-arg name="uri" value="${mongo.uri}"/>
+    </bean>
+
+    <bean id="taskService" class="com.appleframework.monitor.service.TaskService">
+        <property name="executor" ref="concurrentTaskScheduler"/>
+    </bean>
+    
+    <bean id="concurrentTaskScheduler" class="org.springframework.scheduling.concurrent.ConcurrentTaskScheduler">
+        <constructor-arg ref="taskSchedulerService"/>
+    </bean>
+    
+    <bean id="taskSchedulerService" class="java.util.concurrent.Executors" factory-method="newScheduledThreadPool">
+        <constructor-arg value="50" />
+    </bean>
+    
+    <bean id="projectCreator" class="com.appleframework.monitor.util.ProjectCreator" init-method="createSelf">
+         <property name="initTasks">
+              <list>
+                  <ref bean="logTask"/>
+                  <ref bean="jvmTask"/>
+                  <ref bean="dayTask"/>
+              </list>
+         </property>
+       <property name="projectService" ref="projectService"/>
+     </bean>
+     
+    <bean id="alertService" class="com.appleframework.monitor.service.AlertService" init-method="init">
+        <property name="checkSeconds" value="${alert.checkSeconds}"/>
+    </bean>
+    
+    <bean id="velocityEngine" class="org.apache.velocity.app.VelocityEngine" />
+
+    <bean id="userManager"  class="com.appleframework.monitor.security.MongoUserManager" init-method="init">
+        <property name="mongoTemplate" ref="mongoTemplate"/>
+    </bean>
+
+    <bean id="httpAlertNotifier" class="com.appleframework.monitor.service.HttpAlertNotifier">
+        <property name="level" value="ERROR"/>
+    </bean>
+    
+    <bean id="projectStatusService" class="com.appleframework.monitor.service.ProjectStatusService" />
+
+    <bean id="viewService" class="com.appleframework.monitor.service.ViewService" />
+
+</beans>
