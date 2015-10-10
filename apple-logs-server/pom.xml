@@ -252,7 +252,6 @@
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-expression</artifactId>
 				</exclusion>
-				<exclusions>
 		  		<exclusion>
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-core</artifactId>
