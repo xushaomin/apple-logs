@@ -31,6 +31,10 @@
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-beans</artifactId>
 		  		</exclusion>
+		  		<exclusion>
+		  			<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+		  		</exclusion>
 		  	</exclusions>
 		</dependency>
 		
@@ -38,6 +42,16 @@
 			<groupId>com.appleframework.config</groupId>
 		  	<artifactId>apple-config-diamond</artifactId>
 		  	<version>${config.version}</version>
+		  	<exclusions>
+		  		<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+		  		</exclusion>
+		  		<exclusion>
+		  			<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+		  		</exclusion>
+		  	</exclusions>
 		</dependency>
 		
 		<dependency>
@@ -237,6 +251,16 @@
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-expression</artifactId>
 				</exclusion>
+				<exclusions>
+		  		<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+		  		</exclusion>
+		  		<exclusion>
+		  			<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+		  		</exclusion>
+		  	</exclusions>
 			</exclusions>
 			<version>${spring.data.mongo.version}</version>
 		</dependency>
