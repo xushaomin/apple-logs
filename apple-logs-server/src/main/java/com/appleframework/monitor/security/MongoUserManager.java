@@ -39,12 +39,6 @@ public class MongoUserManager implements UserManager {
     public static final String LIST_SEPARATOR = ",";
 
     private MongoTemplate mongoTemplate;
-    /**
-     * admin user ,separated by comma ,
-     */
-    private String systemAdmins;
-
-    private String systemAdminInitPassword = "123456";
 
     @Resource
     private EmailService emailService;
@@ -140,19 +134,11 @@ public class MongoUserManager implements UserManager {
 
     @Override
     public List<String> loadAdmins() {
-        return Lists.newArrayList(systemAdmins.split(LIST_SEPARATOR));
+        return null;
     }
 
     public void setMongoTemplate(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
-    }
-
-    public void setSystemAdmins(String systemAdmins) {
-        this.systemAdmins = systemAdmins;
-    }
-
-    public void setSystemAdminInitPassword(String systemAdminInitPassword) {
-        this.systemAdminInitPassword = systemAdminInitPassword;
     }
 
     public void setEmailService(EmailService emailService) {
