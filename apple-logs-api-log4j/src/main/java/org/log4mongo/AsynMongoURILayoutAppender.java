@@ -51,19 +51,20 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
     
     /** 初始化线程池 */
     public void initThreadPoolExecutor(){
-        workQueue = new LinkedBlockingQueue<Runnable>(2*maxWorkSize);
-        executorService = new ThreadPoolExecutor(threadCount, threadCount,
-                0L, TimeUnit.MILLISECONDS,
-                workQueue);
+		workQueue = new LinkedBlockingQueue<Runnable>(2 * maxWorkSize);
+		executorService = new ThreadPoolExecutor(threadCount, threadCount, 0L, TimeUnit.MILLISECONDS, workQueue);
     }
+    
     /**  性能监控初始化*/
     private void initJvmMonitor() {
-        if(!jvmMonitor.equals("true")) return;
-        if(jvmMonitorPeriodSeconds!=null&&!jvmMonitorPeriodSeconds.equals("")&&jvmMonitorPeriodSeconds.matches("[0-9]*"))
-            JvmMonitor.getInstance(Integer.parseInt(jvmMonitorPeriodSeconds));
-        else
-            JvmMonitor.getInstance();
+		if (!jvmMonitor.equals("true"))
+			return;
+		if (jvmMonitorPeriodSeconds != null && !jvmMonitorPeriodSeconds.equals("") && jvmMonitorPeriodSeconds.matches("[0-9]*"))
+			JvmMonitor.getInstance(Integer.parseInt(jvmMonitorPeriodSeconds));
+		else
+			JvmMonitor.getInstance();
     }
+    
     /** mongodb初始化*/
     private void initMongodb() throws MongoException, UnknownHostException{
     	 if (mongo != null)  close();
@@ -83,8 +84,7 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
         	initMongodb();
             initialized = true;
         } catch (Exception e) {
-            errorHandler.error("Unexpected exception while initialising MongoDbAppender.", e,
-                    ErrorCode.GENERIC_FAILURE);
+            errorHandler.error("Unexpected exception while initialising MongoDbAppender.", e, ErrorCode.GENERIC_FAILURE);
         }
     }
 
@@ -103,29 +103,28 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
             mongo.close();
         }
     }
+    
     public void setCollectionName(final String collectionName) {
         assert collectionName != null : "collection must not be null";
         assert collectionName.trim().length() > 0 : "collection must not be empty or blank";
         this.collectionName = collectionName;
     }
-    
-
 
     @Override
     protected void append(final LoggingEvent loggingEvent) {
         //Map MDCdata = loggingEvent.getProperties();
     	if (workQueue.size() < maxWorkSize) {
-             executorService.execute(new Runnable() {
-             @Override
-             public void run() {
-                 try {
-                     _append(loggingEvent);
-                 } catch (Exception e) {
-                     //ingore errors
-                 }
-             }
-         });
-    }
+    		executorService.execute(new Runnable() {
+    			@Override
+    			public void run() {
+    				try {
+    					_append(loggingEvent);
+    				} catch (Exception e) {
+    					//ingore errors
+    				}
+    			}
+    		});
+    	}
     }
     
     
@@ -149,8 +148,7 @@ public class AsynMongoURILayoutAppender extends BsonAppender {
                     bson.put("timestamp",new Date());
                     getCollection().insert(bson);
                 } catch (MongoException e) {
-                    errorHandler.error("Failed to insert document to MongoDB",
-                            e, ErrorCode.WRITE_FAILURE);
+                    errorHandler.error("Failed to insert document to MongoDB", e, ErrorCode.WRITE_FAILURE);
                 }
             }
         }

@@ -12,7 +12,9 @@ import java.util.concurrent.TimeUnit;
  * @deprecated
  */
 public class AsynMongoDbAppender extends MongoDbAppender {
+	
     private static ThreadPoolExecutor executorService;
+    
     /**
      * 后台写日志的线程个数
      */
@@ -23,12 +25,10 @@ public class AsynMongoDbAppender extends MongoDbAppender {
 
     public void activateOptions() {
         super.activateOptions();
-
         workQueue = new LinkedBlockingQueue<Runnable>(2*maxWorkSize);
         executorService = new ThreadPoolExecutor(threadCount, threadCount,
                 0L, TimeUnit.MILLISECONDS,
                 workQueue);
-
     }
 
     @Override
