@@ -43,7 +43,7 @@ else
     LOGS_DIR=$DEPLOY_DIR/logs
 fi
 if [ ! -d $LOGS_DIR ]; then
-    mkdir $LOGS_DIR
+    mkdir -p $LOGS_DIR
 fi
 STDOUT_FILE=$LOGS_DIR/stdout.log
 
@@ -72,7 +72,7 @@ JAVA_MEM_OPTS=" -server -Xmx2g -Xms1g -Xmn256m -XX:PermSize=128m -Xss256k -XX:+D
 
 
 echo -e "Starting the $SERVER_NAME ...\c"
-nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS com.appleframework.boot.jetty.SpringJettyMain env=$ENV > $STDOUT_FILE 2>&1 &
+nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS com.appleframework.boot.Main env=$ENV > $STDOUT_FILE 2>&1 &
 
 COUNT=0
 while [ $COUNT -lt 1 ]; do    
