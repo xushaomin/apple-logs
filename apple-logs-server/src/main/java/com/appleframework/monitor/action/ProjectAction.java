@@ -17,12 +17,14 @@ package com.appleframework.monitor.action;
 
 import com.google.common.collect.Lists;
 import com.appleframework.monitor.model.*;
-import com.appleframework.monitor.security.SimpleAuthz;
+import com.appleframework.monitor.security.LogsUser;
 import com.appleframework.monitor.service.AlertService;
 import com.appleframework.monitor.service.ViewService;
 import com.appleframework.monitor.service.ProjectService;
 import com.appleframework.monitor.util.ProjectCreator;
 import com.appleframework.monitor.util.SerializableResourceBundleMessageSource;
+
+import org.jasig.cas.client.filter.CasFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -55,9 +57,6 @@ public class ProjectAction {
     private ProjectCreator projectCreator;
     
     @Resource
-    private SimpleAuthz simpleAuthz;
-
-    @Resource
     private AlertService alertService;
 
     @Resource
@@ -84,21 +83,21 @@ public class ProjectAction {
     @ResponseBody
     ModelMap list(ModelMap map, HttpServletRequest request) throws IOException {
         List<Project> projects = projectService.findProjects();
-        for (Project project : projects) {
+        /*for (Project project : projects) {
             fixAlias(project, request);
-        }
+        }*/
         map.put("projects", projects);
         List<View> views = viewService.findAll();
         map.put("views", views);
         return map;
     }
 
-    private void fixAlias(Project project, HttpServletRequest request) {
+    /*private void fixAlias(Project project, HttpServletRequest request) {
         if (project.getName().equalsIgnoreCase("flash_dog")) {
             String message = messageBundle.getMessage("app.title", null, request.getLocale());
             project.setAlias(message);
         }
-    }
+    }*/
 
     /**
      * 创建项目
@@ -108,10 +107,10 @@ public class ProjectAction {
      */
 
     @RequestMapping(value = "/projects/add", method = RequestMethod.POST)
-    public @ResponseBody WebResult add(@RequestBody Project project) throws IOException {
+    public @ResponseBody WebResult add(@RequestBody Project project, HttpServletRequest request) throws IOException {
     	//Project project =entity.getBody();
-        String userName = simpleAuthz.getPrincipal();
-        project.setAdmins(Lists.newArrayList(userName));
+    	LogsUser user = (LogsUser)request.getSession().getAttribute(CasFilter.SESSION_USER_KEY);
+        project.setAdmins(Lists.newArrayList(user.getUsername()));
         WebResult result = new WebResult();
         project.setMetricCollection(project.getMetricCollection());
         try {
@@ -130,7 +129,7 @@ public class ProjectAction {
         Project project = projectService.findProject(name);
         map.put("project", project);
         map.put("metricNames", project.findMetricNames());
-        fixAlias(project, request);
+        //fixAlias(project, request);
         return map;
     }
 
