@@ -113,11 +113,9 @@
         <!--<property name="allowRequestOverride" value="true"/>-->
     </bean>
     
-    <!-- 
     <bean id="autzh" class="com.appleframework.monitor.security.SimpleAuthz">
         <property name="userManager" ref="userManager"/>
     </bean>
-	 -->
 	 
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="Error"/>
