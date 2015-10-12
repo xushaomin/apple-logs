@@ -35,14 +35,19 @@ import java.util.concurrent.ScheduledExecutorService;
  * @author hill.hu
  */
 public class EmailService extends AbstractAlertNotifier implements AlertListener {
+	
     private static Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Resource
     private JavaMailSender mailSender;
+    
     @Resource
     private ProjectService projectService;
+    
     private boolean enable = true;
+    
     private final static ScheduledExecutorService executor = Executors.newScheduledThreadPool(5);
+    
     private String from;
 
     public void _notify(Alert alert) {
@@ -69,6 +74,7 @@ public class EmailService extends AbstractAlertNotifier implements AlertListener
     public void send(final SimpleMailMessage msg) {
         if (!enable)
             return;
+        
         logger.debug("send mail {}", msg);
 
         executor.submit(new Runnable() {
@@ -82,8 +88,6 @@ public class EmailService extends AbstractAlertNotifier implements AlertListener
                 }
             }
         });
-
-
     }
 
 

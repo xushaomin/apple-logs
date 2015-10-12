@@ -6,17 +6,16 @@
     <bean id="logTask" class="com.appleframework.monitor.model.Task" scope="prototype">
         <property name="cron" value="40 */5 * * * *"/>
         <property name="name" value="log_stats"/>
-
     </bean>
 
     <bean id="jvmTask" class="com.appleframework.monitor.model.Task" scope="prototype">
         <property name="cron" value="40 */2 * * * *"/>
         <property name="name" value="jvm_stats"/>
-
     </bean>
+    
     <bean id="dayTask" class="com.appleframework.monitor.model.Task" scope="prototype">
         <property name="cron" value="40 */5 * * * *"/>
         <property name="name" value="day_stats"/>
-
     </bean>
+    
 </beans>

@@ -10,7 +10,7 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="javaMailProperties">
             <props>
-                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.auth">${email.smtp.auth:true}</prop>
             </props>
         </property>
     </bean>
@@ -19,7 +19,6 @@
         <property name="from" value="${email.username}"/>
         <property name="level" value="WARN"/>
     </bean>
-
 
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="5"/>

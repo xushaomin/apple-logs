@@ -23,6 +23,7 @@ import junit.framework.TestCase;
  * Date: 11-12-8 上午9:50
  */
 public class EmailServiceTest extends TestCase {
+	
     EmailService emailService;
 
     public void test_send() throws Exception {

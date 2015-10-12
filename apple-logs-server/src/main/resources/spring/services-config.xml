@@ -11,6 +11,7 @@
   	<import resource="task-templates.xml"/>
   	
     <context:annotation-config/>
+    
     <context:component-scan base-package="com.appleframework.monitor.service,com.appleframework.monitor.security"/>
     
     <bean id="projectService" class="com.appleframework.monitor.service.ProjectService" init-method="init">

@@ -7,6 +7,7 @@
     http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
     <mvc:resources location="/styles/" mapping="/styles/**"/>
     <mvc:resources location="/images/" mapping="/images/**"/>
     <mvc:resources location="/js/" mapping="/js/**"/>
@@ -18,19 +19,19 @@
     <aop:aspectj-autoproxy/>
 
     <context:component-scan base-package="com.appleframework.monitor"/>
+    
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors">
             <list>
-
                 <ref bean="userInterceptor"/>
             </list>
-                </property>
-
-
+		</property>
     </bean>
+    
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="lang"/>
     </bean>
+    
     <bean id="userInterceptor" class="com.appleframework.monitor.security.UserInterceptor"/>
 
     <!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
@@ -44,21 +45,20 @@
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
                 <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
                 <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
-
             </list>
         </property>
         <property name="requireSession" value="false"/>
-
     </bean>
+    
     <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="resourceLoaderPath" value="/"/>
         <property name="configLocation" value="/WEB-INF/velocity.properties"/>
-
     </bean>
-    <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+    
+    <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper" />
 
-    </bean>
-    <bean id="jacksonSerializationConfig" class="org.codehaus.jackson.map.SerializationConfig" factory-bean="jacksonObjectMapper" factory-method="getSerializationConfig" />
+    <bean id="jacksonSerializationConfig" class="org.codehaus.jackson.map.SerializationConfig" 
+    	factory-bean="jacksonObjectMapper" factory-method="getSerializationConfig" />
 
     <!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /blog/1.json /blog/1.xml -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
@@ -71,35 +71,27 @@
         <property name="mediaTypes">
             <map>
                 <entry key="json" value="application/json"/>
-
             </map>
-
         </property>
         <property name="favorPathExtension" value="false"/>
         <!-- 用于开启 /userinfo/123?format=json 的支持 -->
         <!--<property name="favorParameter" value="true"/>-->
         <property name="viewResolvers">
             <list>
-
                 <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
                 <ref bean="velocityLayoutViewResolver"/>
-
             </list>
         </property>
         <property name="defaultViews">
             <list>
                 <!-- for application/json -->
-                <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
-
-                </bean>
-
+                <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
             </list>
         </property>
     </bean>
-    <bean id="velocityLayoutViewResolver"
-          class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-        <property name="viewClass"
-                  value="org.springframework.web.servlet.view.velocity.VelocityLayoutView"/>
+    
+    <bean id="velocityLayoutViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.velocity.VelocityLayoutView"/>
         <property name="layoutUrl" value="/WEB-INF/content/layout/Default.vm"/>
         <property name="cache" value="false"/>
         <property name="prefix" value="/WEB-INF/content/"/>
@@ -111,7 +103,6 @@
         <property name="exposeSpringMacroHelpers" value="true"/>
         <property name="exposeRequestAttributes" value="true"/>
         <property name="allowSessionOverride" value="true"/>
-        
         <!-- 
         <property name="attributesMap">
             <map>
@@ -120,14 +111,15 @@
         </property>
          -->
         <!--<property name="allowRequestOverride" value="true"/>-->
-
     </bean>
+    
+    <!-- 
     <bean id="autzh" class="com.appleframework.monitor.security.SimpleAuthz">
         <property name="userManager" ref="userManager"/>
     </bean>
-
-    <bean id="exceptionResolver"
-          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+	 -->
+	 
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="Error"/>
         <property name="warnLogCategory" value="WARN"/>
         <property name="exceptionMappings">
@@ -143,4 +135,5 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="useCodeAsDefaultMessage" value="true"/>
     </bean>
+    
 </beans>
