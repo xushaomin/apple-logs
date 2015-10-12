@@ -31,9 +31,8 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
         if (request.getUserPrincipal() != null) {
-            request.setAttribute(SimpleAuthz.USER_PRINCIPAL, request.getUserPrincipal());
+            //request.setAttribute(SimpleAuthz.USER_PRINCIPAL, request.getUserPrincipal());
             request.setAttribute("userName", request.getUserPrincipal().getName());
         }
         logger.debug("receive a  page request ");

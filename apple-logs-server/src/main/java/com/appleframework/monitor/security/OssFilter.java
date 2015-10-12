@@ -88,9 +88,7 @@ public class OssFilter extends AbstractConfigurationFilter {
 				if(null != attributes.get("email")) {
 					user.setEmail(attributes.get("email").toString());
 				}
-				SimpleAuthz.userMap.put(httpRequest.getSession().getId(), user);
 				httpRequest.getSession().setAttribute(CasFilter.SESSION_USER_KEY, user);
-
 			}
 		}
 		filterChain.doFilter(request, response);
