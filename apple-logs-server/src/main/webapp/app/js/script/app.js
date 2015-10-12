@@ -17,12 +17,11 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
         hasProject:function(project){
          if(!project)
              return false;
-         return  this.isAdmin  || project.admins.indexOf(this.username)>-1;
+         return this.isAdmin || project.admins.indexOf(this.username)>-1;
      }
     };
         $scope.setPageTitle=function(pageTitle){
             $scope.pageTitle=pageTitle;
-
      }  ;
     jQuery.extend($scope.auth,_auth);
 
@@ -71,18 +70,15 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
 
         var interceptor = ['$location', '$q', function($location, $q,$scope) {
             function success(response) {
-
                 return response;
             }
 
             function error(response) {
-
                 if(response.status === 401) {
                     window.location.href=".";
                     return $q.reject(response);
                 }
                 else {
-
                     return $q.reject(response);
                 }
             }
@@ -95,13 +91,13 @@ angular.module('app', ['fd.project','fd.setting','fd.user','ngRoute','ngAnimate'
         $httpProvider.responseInterceptors.push(interceptor);
 
         $translateProvider.useUrlLoader('/resource/messages');
-//        $translateProvider.useStorage('UrlLanguageStorage');
+		//$translateProvider.useStorage('UrlLanguageStorage');
         $translateProvider.preferredLanguage(_auth.lang);
         $translateProvider.fallbackLanguage('en');
     }]).directive('fdMessage', function () {
         return {
             restrict: 'C',
-//            replace: true,
+			//replace: true,
             template: '',
             link: function (scope, element, attrs) {
                 scope.messages= [];

@@ -14,6 +14,7 @@
 
     <mvc:resources location="/app/" mapping="/app/**"/>
     <mvc:resources location="/jsEditor/" mapping="/jsEditor//**"/>
+    
     <import resource="env-config.xml" />
 
     <aop:aspectj-autoproxy/>
@@ -23,7 +24,8 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors">
             <list>
-                <ref bean="userInterceptor"/>
+                <!-- <ref bean="userInterceptor" /> -->
+                <!-- <ref bean="localeChangeInterceptor" /> -->
             </list>
 		</property>
     </bean>
@@ -113,9 +115,11 @@
         <!--<property name="allowRequestOverride" value="true"/>-->
     </bean>
     
+    <!-- 
     <bean id="autzh" class="com.appleframework.monitor.security.SimpleAuthz">
         <property name="userManager" ref="userManager"/>
     </bean>
+	 -->
 	 
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="Error"/>

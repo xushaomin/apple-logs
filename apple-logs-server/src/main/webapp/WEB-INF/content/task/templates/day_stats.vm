@@ -2,7 +2,7 @@
 //stats 5 min first,then stats all
 var now=new Date();
 var metric5="#springMessage('label.5minRequestStats')" ;
-var metricDay="#springMessage('label.5minRequestStats')";
+var metricDay="#springMessage('label.requestDayStats')";
 var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 var value=db.${project.logCollection}.find({'message':/receive a  page request/,timestamp:{'$gt':new Date(now - 300000)}}).count()
 var total=0;
