@@ -119,7 +119,7 @@ public class ProjectAction {
         } catch (IllegalArgumentException e) {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
-            logger.debug("", e);
+            logger.error("", e);
         }
         return result;
     }
@@ -173,9 +173,7 @@ public class ProjectAction {
     @ResponseBody
     WebResult delete(@PathVariable String projectName) throws IOException {
         projectService.remove(projectName);
-
         return new WebResult();
-
     }
 
 }

@@ -44,25 +44,18 @@ public class TaskAction {
     @Resource
     private ProjectService projectService;
 
-
-
-
     @RequestMapping(value = "/projects/{projectName}/tasks/template/{id}", method = RequestMethod.GET)
     public String edit(ModelMap map, @PathVariable String projectName,  @PathVariable String id)   {
         Project project = projectService.findProject(projectName);
-
         map.put("project", project);
-
         return "task/templates/"+id;
     }
 
     @RequestMapping(value = "/projects/{projectName}/tasks/update", method = RequestMethod.POST)
-    public @ResponseBody
-    WebResult updateTask(ModelMap map, @PathVariable String projectName, HttpEntity<Task> entity) {
+    public @ResponseBody WebResult updateTask(ModelMap map, @PathVariable String projectName, HttpEntity<Task> entity) {
         Task task=entity.getBody();
         logger.debug("update task {}", new Gson().toJson(task));
         projectService.saveTask(projectName, task);
-
         return new WebResult();
     }
 
@@ -70,9 +63,7 @@ public class TaskAction {
     @RequestMapping(value = "/projects/{projectName}/tasks/{taskName}/destroy")
     public @ResponseBody WebResult deleteTask(ModelMap map, @PathVariable String projectName, @PathVariable String taskName) throws IOException {
         projectService.removeTask(projectName, taskName);
-
         return new WebResult();
-
     }
 
 }

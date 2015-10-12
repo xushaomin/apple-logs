@@ -110,7 +110,6 @@ public class LogsAction {
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(buf.toString());
         response.getWriter().flush();
-
     }
 
 }
