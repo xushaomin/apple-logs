@@ -15,7 +15,6 @@
  */
 package com.appleframework.monitor.security;
 
-import com.google.common.collect.Lists;
 import com.appleframework.monitor.service.EmailService;
 
 import org.jasig.cas.client.model.User;
@@ -126,11 +125,11 @@ public class MongoUserManager implements UserManager {
         }*/
     }
 
-    private void saveUser(User user) {
+    //private void saveUser(User user) {
        /* Assert.hasLength(user.getUsername(), "username can't  be empty");
         Assert.hasLength(user.getPassword(), "password can't  be empty");
         mongoTemplate.save(user, COLLECTION_NAME_USER);*/
-    }
+    //}
 
     @Override
     public List<String> loadAdmins() {
