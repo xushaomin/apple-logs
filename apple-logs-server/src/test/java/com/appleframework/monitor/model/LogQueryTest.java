@@ -16,8 +16,10 @@
 package com.appleframework.monitor.model;
 
 import junit.framework.TestCase;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.query.BasicQuery;
-import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 
 /**
@@ -45,7 +47,8 @@ public class LogQueryTest extends TestCase {
         Query bquery = new BasicQuery(query.toQuery());
         bquery.limit(100);
 
-        bquery.sort().on("$timestamp", Order.DESCENDING);
+        //bquery.sort().on("$timestamp", Order.DESCENDING);
+        bquery.with(new Sort(Direction.DESC, "$timestamp"));
         System.out.println(bquery.getQueryObject());
         System.out.println(bquery.getFieldsObject());
         System.out.println(bquery.getSortObject());

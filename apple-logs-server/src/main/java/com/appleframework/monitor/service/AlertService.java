@@ -22,9 +22,10 @@ import com.appleframework.monitor.model.MetricDog;
 import com.appleframework.monitor.model.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 
 import javax.annotation.Resource;
@@ -148,8 +149,8 @@ public class AlertService {
 
     public List<Alert> findAlerts(String projectName) {
         Query query = Query.query(Criteria.where("projectName").is(projectName)).limit(50);
-        query.sort().on("createTime", Order.DESCENDING);
-        //query.with(new Sort(Direction.DESC, "createTime"));
+        //query.sort().on("createTime", Order.DESCENDING);
+        query.with(new Sort(Direction.DESC, "createTime"));
         return mongoTemplate.find(query, Alert.class, collectionName);
     }
 
