@@ -20,9 +20,10 @@ import com.appleframework.monitor.model.LogQuery;
 import com.appleframework.monitor.model.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
-import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
@@ -56,8 +57,8 @@ public class LogsService {
         Query query = new BasicQuery(logQuery.toQuery());
         query.limit(max);
 
-        query.sort().on("timestamp", Order.DESCENDING);
-        //query.with(new Sort(Direction.DESC, "timestamp"));
+        //query.sort().on("timestamp", Order.DESCENDING);
+        query.with(new Sort(Direction.DESC, "timestamp"));
         logger.debug("find logs from {}  by query {} by sort {}", new Object[]{project.getLogCollection(), query.getQueryObject(), query.getSortObject()});
         DBCursor cursor = template.getCollection(project.getLogCollection()).find(query.getQueryObject()).sort(query.getSortObject()).limit(max);
         return cursor;

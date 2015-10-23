@@ -21,9 +21,10 @@ import com.appleframework.monitor.model.Project;
 import com.appleframework.monitor.model.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.Assert;
 
@@ -52,8 +53,8 @@ public class ProjectService {
 
     public List<Project> findProjects() {
         Query query = new Query();
-        query.sort().on("name", Order.ASCENDING);
-        //query.with(new Sort(Direction.ASC, "name"));
+        //query.sort().on("name", Order.ASCENDING);
+        query.with(new Sort(Direction.ASC, "name"));
         List<Project> projects = mongoTemplate.find(query, Project.class, collectionName);
         return projects;
     }

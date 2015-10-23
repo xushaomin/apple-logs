@@ -26,12 +26,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.authentication.UserCredentials;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.*;
@@ -288,8 +289,8 @@ public class Project {
 
         Query query = fetchTimeQuery();
         query.addCriteria(Criteria.where("name").is(metricName));
-        query.sort().on(Constants.TIME_STAMP_FIELD_NAME, Order.ASCENDING);
-        //query.with(new Sort(Direction.ASC, Constants.TIME_STAMP_FIELD_NAME));
+        //query.sort().on(Constants.TIME_STAMP_FIELD_NAME, Order.ASCENDING);
+        query.with(new Sort(Direction.ASC, Constants.TIME_STAMP_FIELD_NAME));
         logger.debug("find metric value by {} ,mongo={}", query.getQueryObject(), mongoUri);
         return fetchMongoTemplate().find(query, MetricValue.class, metricCollection);
     }
@@ -302,8 +303,8 @@ public class Project {
      */
     public MetricValue findLastMetric(String metricName) {
         Query query = BasicQuery.query(Criteria.where("name").is(metricName));
-        query.sort().on(Constants.TIME_STAMP_FIELD_NAME, Order.DESCENDING);
-        //query.with(new Sort(Direction.DESC, Constants.TIME_STAMP_FIELD_NAME));
+        //query.sort().on(Constants.TIME_STAMP_FIELD_NAME, Order.DESCENDING);
+        query.with(new Sort(Direction.DESC, Constants.TIME_STAMP_FIELD_NAME));
         return fetchMongoTemplate().findOne(query, MetricValue.class, metricCollection);
     }
 
